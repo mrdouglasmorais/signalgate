@@ -2,19 +2,35 @@
 
 SignalGate is a single Node.js service. v0.1 keeps every state in memory so the decision path can be read from one end to the other.
 
-## Context
+## Context and architecture
 
 Operators, or a simulator, submit an incident. The service returns a classification and an action. The only external system in v0.1 is TypeSafe's Jev API, and only when a live evaluation is requested. Tests use recorded answers.
 
+Jev classifies. The policy chooses the action. History stays in process memory.
+
 ```mermaid
 flowchart TB
-  actor[Operator or simulator]
-  sg[SignalGate API]
-  jev[TypeSafe Jev]
-  actor -->|incident payload| sg
-  sg -->|state and questions| jev
-  jev -->|typed answers| sg
-  sg -->|decision and action| actor
+  operator["Operator or simulator"]
+
+  subgraph signalgate ["SignalGate"]
+    direction TB
+    http["HTTP · Fastify<br/>create, evaluate, simulate"]
+    context["Incident context<br/>telemetry, no metadata"]
+    engine["JevDecisionEngine<br/>maps answers into IncidentDecision"]
+    policy["PolicyEngine<br/>deterministic"]
+    memory[("In-memory maps<br/>incidents and decisions")]
+
+    http --> context --> engine --> policy
+    http --> memory
+    policy --> memory
+  end
+
+  jev["TypeSafe Jev<br/>choice and score"]
+
+  operator -->|"incident"| http
+  engine -->|"state and questions"| jev
+  jev -->|"domain, score, confidence"| engine
+  http -->|"decision and action"| operator
 ```
 
 ## Containers
@@ -29,22 +45,6 @@ flowchart TB
 Redis is optional and has no phase until a measured need exists.
 
 ## Components
-
-```mermaid
-flowchart LR
-  http[HTTP handlers]
-  uc[Use cases]
-  ctx[IncidentContextBuilder]
-  engine[DecisionEngine]
-  jev[JevDecisionEngine]
-  policy[PolicyEngine]
-  store[In-memory store]
-  http --> uc
-  uc --> ctx --> engine
-  engine --> jev
-  uc --> policy
-  uc --> store
-```
 
 Handlers validate and map HTTP. Use cases order the work. The context builder normalizes telemetry into the state Jev will see. The Jev adapter asks the questions and maps answers. The policy engine is a pure function.
 

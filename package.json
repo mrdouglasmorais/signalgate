@@ -7,8 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "node --import ./scripts/register-aliases.mjs --import tsx --watch src/interfaces/http/server.ts",
-    "start": "node dist/interfaces/http/server.js",
+    "dev": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import ./scripts/register-aliases.mjs --import tsx --watch src/interfaces/http/server.ts",
+    "start": "node --env-file-if-exists=.env --env-file-if-exists=.env.local dist/interfaces/http/server.js",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --coverage",

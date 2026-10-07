@@ -1,0 +1,644 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-10-07T20:35:00.000Z",
+  "__export_source": "signalgate:v0.1.0",
+  "resources": [
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "wrk_signalgate",
+      "parentId": null,
+      "name": "SignalGate",
+      "description": "Exercita a API v0.1. Crie um incidente e depois consulte, avalie e leia a decisão. Avaliar e simular chamam o Jev, então o processo precisa de TYPESAFE_API_KEY. O histórico some quando o processo reinicia.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "env_signalgate_base",
+      "parentId": "wrk_signalgate",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://127.0.0.1:3000",
+        "incident_id": ""
+      },
+      "dataPropertyOrder": {
+        "&": ["base_url", "incident_id"]
+      },
+      "color": null,
+      "metaSortKey": 1,
+      "_type": "environment"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "fld_sg_health",
+      "parentId": "wrk_signalgate",
+      "name": "Saúde",
+      "description": "O processo está no ar. Estas rotas não chamam o Jev.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1,
+      "_type": "request_group"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "fld_sg_flow",
+      "parentId": "wrk_signalgate",
+      "name": "Fluxo do incidente",
+      "description": "Execute Criar incidente primeiro. O script grava o id em incident_id, e as rotas seguintes usam essa variável.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 2,
+      "_type": "request_group"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "fld_sg_errors",
+      "parentId": "wrk_signalgate",
+      "name": "Falhas esperadas",
+      "description": "Corpos rejeitados e incidentes ausentes.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 3,
+      "_type": "request_group"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "_id": "fld_sg_scenarios",
+      "parentId": "wrk_signalgate",
+      "name": "Cenários",
+      "description": "Cada chamada grava o incidente e pede uma decisão ao Jev. Exige TYPESAFE_API_KEY no processo.",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 4,
+      "_type": "request_group"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Responde {\"status\":\"ok\"}.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-health"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_health",
+      "parentId": "fld_sg_health",
+      "name": "Health",
+      "method": "GET",
+      "url": "{{ _.base_url }}/health"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Na v0.1 responde {\"status\":\"ready\"} mesmo sem TYPESAFE_API_KEY.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-ready"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_ready",
+      "parentId": "fld_sg_health",
+      "name": "Ready",
+      "method": "GET",
+      "url": "{{ _.base_url }}/ready"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Grava o incidente de latência de banco e devolve o id usado nas rotas seguintes.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:00:00.000Z\",\n  \"source\": \"prometheus\",\n  \"service\": \"billing-db\",\n  \"environment\": \"production\",\n  \"title\": \"Database latency spike\",\n  \"description\": \"p95 query latency on billing-db exceeded 2s for five minutes.\",\n  \"metadata\": {\n    \"region\": \"us-east-1\"\n  },\n  \"telemetry\": {\n    \"latency\": 2400,\n    \"errorRate\": 0.04,\n    \"cpu\": 71\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-create"
+        },
+        {
+          "name": "x-trace-id",
+          "value": "trace-create"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_create",
+      "parentId": "fld_sg_flow",
+      "name": "Criar incidente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/incidents",
+      "afterResponseScript": "const body = insomnia.response.json();\nif (body && typeof body.id === 'string') {\n  insomnia.environment.set('incident_id', body.id);\n  if (insomnia.baseEnvironment && typeof insomnia.baseEnvironment.set === 'function') {\n    insomnia.baseEnvironment.set('incident_id', body.id);\n  }\n}\n"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Lê o incidente cujo id está em incident_id.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-get"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_get",
+      "parentId": "fld_sg_flow",
+      "name": "Consultar incidente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/incidents/{{ incident_id }}"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Pede a classificação ao Jev e deixa a política escolher a ação. Exige TYPESAFE_API_KEY.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-evaluate"
+        },
+        {
+          "name": "x-trace-id",
+          "value": "trace-evaluate"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_evaluate",
+      "parentId": "fld_sg_flow",
+      "name": "Avaliar incidente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/incidents/{{ incident_id }}/evaluate"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Devolve a última decisão gravada para o incidente.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-decision"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 4,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_decision",
+      "parentId": "fld_sg_flow",
+      "name": "Ler decisão",
+      "method": "GET",
+      "url": "{{ _.base_url }}/incidents/{{ incident_id }}/decision"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Ambiente fora da lista. A resposta é 400, com code invalid_incident.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"source\": \"prometheus\",\n  \"service\": \"billing\",\n  \"environment\": \"qa\",\n  \"title\": \"Ambiente fora da lista\",\n  \"description\": \"Este corpo deve ser rejeitado.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-invalid"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_invalid",
+      "parentId": "fld_sg_errors",
+      "name": "Incidente inválido",
+      "method": "POST",
+      "url": "{{ _.base_url }}/incidents"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Resposta 404, com code incident_not_found.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-missing"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_missing",
+      "parentId": "fld_sg_errors",
+      "name": "Incidente ausente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/incidents/inc_missing"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Sem incidente, a resposta é 404 com code incident_not_found.",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-request-id",
+          "value": "manual-no-decision"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_no_decision",
+      "parentId": "fld_sg_errors",
+      "name": "Decisão ausente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/incidents/inc_missing/decision"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:00:00.000Z\",\n  \"source\": \"prometheus\",\n  \"service\": \"billing-db\",\n  \"environment\": \"production\",\n  \"title\": \"Database latency spike\",\n  \"description\": \"p95 query latency on billing-db exceeded 2s for five minutes.\",\n  \"metadata\": {\n    \"region\": \"us-east-1\"\n  },\n  \"telemetry\": {\n    \"latency\": 2400,\n    \"errorRate\": 0.04,\n    \"cpu\": 71\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-database-latency"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_database_latency",
+      "parentId": "fld_sg_scenarios",
+      "name": "Latência de banco",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:05:00.000Z\",\n  \"source\": \"prometheus\",\n  \"service\": \"session-cache\",\n  \"environment\": \"production\",\n  \"title\": \"Redis cache miss storm\",\n  \"description\": \"Cache hit ratio fell below 20 percent and origin latency climbed.\",\n  \"metadata\": {\n    \"cluster\": \"sessions\"\n  },\n  \"telemetry\": {\n    \"latency\": 800,\n    \"errorRate\": 0.12,\n    \"cpu\": 64\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-cache-miss-storm"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 2,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_cache_miss_storm",
+      "parentId": "fld_sg_scenarios",
+      "name": "Tempestade de cache miss",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:10:00.000Z\",\n  \"source\": \"cloudwatch\",\n  \"service\": \"order-worker\",\n  \"environment\": \"production\",\n  \"title\": \"SQS queue backlog\",\n  \"description\": \"The order queue depth has climbed for twenty minutes.\",\n  \"metadata\": {\n    \"queue\": \"orders\"\n  },\n  \"telemetry\": {\n    \"queueDepth\": 15000,\n    \"latency\": 1200\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-queue-backlog"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 3,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_queue_backlog",
+      "parentId": "fld_sg_scenarios",
+      "name": "Fila acumulada",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:15:00.000Z\",\n  \"source\": \"gateway\",\n  \"service\": \"payments-api\",\n  \"environment\": \"production\",\n  \"title\": \"External payment provider timeout\",\n  \"description\": \"The card provider stopped answering within the client timeout.\",\n  \"metadata\": {\n    \"provider\": \"card-gateway\"\n  },\n  \"telemetry\": {\n    \"latency\": 10000,\n    \"errorRate\": 0.62,\n    \"statusCode\": 504,\n    \"exception\": \"timeout\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-payment-provider-timeout"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 4,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_payment_provider_timeout",
+      "parentId": "fld_sg_scenarios",
+      "name": "Timeout do provedor de pagamento",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:20:00.000Z\",\n  \"source\": \"auth-logs\",\n  \"service\": \"login\",\n  \"environment\": \"production\",\n  \"title\": \"Authentication failure spike\",\n  \"description\": \"Failed logins jumped across the production login service.\",\n  \"metadata\": {\n    \"region\": \"eu-west-1\"\n  },\n  \"telemetry\": {\n    \"errorRate\": 0.4,\n    \"statusCode\": 401\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-authentication-failure"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 5,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_authentication_failure",
+      "parentId": "fld_sg_scenarios",
+      "name": "Pico de falha de autenticação",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:25:00.000Z\",\n  \"source\": \"node-exporter\",\n  \"service\": \"checkout\",\n  \"environment\": \"production\",\n  \"title\": \"CPU saturation\",\n  \"description\": \"Checkout hosts stayed above 95 percent CPU.\",\n  \"metadata\": {\n    \"cluster\": \"checkout\"\n  },\n  \"telemetry\": {\n    \"cpu\": 99,\n    \"memory\": 91\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-cpu-saturation"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 6,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_cpu_saturation",
+      "parentId": "fld_sg_scenarios",
+      "name": "Saturação de CPU",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:30:00.000Z\",\n  \"source\": \"access-log\",\n  \"service\": \"edge\",\n  \"environment\": \"production\",\n  \"title\": \"5xx error spike\",\n  \"description\": \"The edge started returning server errors without a clear owner.\",\n  \"metadata\": {\n    \"pop\": \"gru\"\n  },\n  \"telemetry\": {\n    \"errorRate\": 0.55,\n    \"statusCode\": 500\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-error-spike"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 7,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_error_spike",
+      "parentId": "fld_sg_scenarios",
+      "name": "Pico de 5xx",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    },
+    {
+      "modified": 1791405300000,
+      "created": 1791405300000,
+      "isPrivate": false,
+      "description": "Cria o incidente e avalia na mesma chamada. Exige TYPESAFE_API_KEY.",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"timestamp\": \"2026-10-07T12:35:00.000Z\",\n  \"source\": \"pager\",\n  \"service\": \"unknown-service\",\n  \"environment\": \"staging\",\n  \"title\": \"Unclear alert\",\n  \"description\": \"A single probe failed once and recovered.\",\n  \"metadata\": {},\n  \"telemetry\": {\n    \"latency\": 50\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "x-request-id",
+          "value": "manual-ambiguous-signal"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 8,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request",
+      "_id": "req_sg_sim_ambiguous_signal",
+      "parentId": "fld_sg_scenarios",
+      "name": "Sinal ambíguo",
+      "method": "POST",
+      "url": "{{ _.base_url }}/simulations"
+    }
+  ]
+}

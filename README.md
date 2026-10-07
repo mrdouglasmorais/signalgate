@@ -8,7 +8,7 @@ Telemetry → Context → Decision → Policy → Action
 
 An incident arrives as logs, metrics, or a simulated payload. A decision engine, starting with [Jev](https://docs.typesafe.ai) (TypeSafe's System One model), returns a structured classification. Deterministic policy code then chooses the action. The model never shells out, never touches infrastructure, and never applies the policy itself.
 
-**Status:** specification is in place. Application code is not. The first release is a thin slice, not the full platform.
+**Status:** v0.1 is the in-memory path from incident to action. PostgreSQL, Redis, and OpenTelemetry are later phases.
 
 ## Problem
 
@@ -18,23 +18,31 @@ SignalGate splits those jobs. Classification can be probabilistic. Execution is 
 
 ## Architecture
 
+Jev classifies. The policy chooses the action. v0.1 keeps incidents and decisions in memory.
+
 ```mermaid
-flowchart LR
-  subgraph api [HTTP API]
-    In[Incident payload]
+flowchart TB
+  operator["Operator or simulator"]
+
+  subgraph signalgate ["SignalGate"]
+    direction TB
+    http["HTTP · Fastify<br/>create, evaluate, simulate"]
+    context["Incident context<br/>telemetry, no metadata"]
+    engine["JevDecisionEngine<br/>maps answers into IncidentDecision"]
+    policy["PolicyEngine<br/>deterministic"]
+    memory[("In-memory maps<br/>incidents and decisions")]
+
+    http --> context --> engine --> policy
+    http --> memory
+    policy --> memory
   end
-  subgraph app [Application]
-    Ctx[Context builder]
-    Dec[Decision engine]
-    Pol[Policy engine]
-  end
-  subgraph external [External]
-    Jev[TypeSafe Jev]
-  end
-  In --> Ctx --> Dec
-  Dec --> Jev
-  Jev --> Dec
-  Dec --> Pol --> Out[Decision and action]
+
+  jev["TypeSafe Jev<br/>choice and score"]
+
+  operator -->|"incident"| http
+  engine -->|"state and questions"| jev
+  jev -->|"domain, score, confidence"| engine
+  http -->|"decision and action"| operator
 ```
 
 The domain does not import the Jev SDK. `JevDecisionEngine` is one `DecisionEngine`. Later phases can add a rule engine and an LLM behind the same interface and compare them on a fixed set of incidents.
@@ -55,7 +63,7 @@ v0.1 is Incident → Jev → Decision → Policy → Response, stored in memory,
 
 ## Getting started
 
-Node.js 24 (see `.nvmrc`) and pnpm 10. Copy `.env.example` to `.env`. `TYPESAFE_API_KEY` is required only for a live Jev call. The test suite passes without it.
+Node.js 24 (see `.nvmrc`) and pnpm 10. Copy `.env.example` to `.env`. `pnpm dev` reads `.env` and then `.env.local`. `TYPESAFE_API_KEY` is required only for a live Jev call. The test suite passes without it.
 
 ```sh
 pnpm install
@@ -70,6 +78,8 @@ docker compose up --build
 ```
 
 In Docker the process listens on `0.0.0.0:3000`. History is still in memory and disappears when the container stops.
+
+Import `collections/signalgate.insomnia.json` into Insomnia. The base environment calls `http://127.0.0.1:3000`. Create an incident first: the after-response script stores `incident_id`, and the following requests use that variable. You can also paste an id into the environment. Evaluate and the scenario simulations call Jev, so the process needs `TYPESAFE_API_KEY`.
 
 ## Further reading
 
