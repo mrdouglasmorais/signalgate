@@ -1,0 +1,11 @@
+{
+  "id": "inc_database_latency",
+  "timestamp": "2026-10-07T12:00:00.000Z",
+  "source": "prometheus",
+  "service": "billing-db",
+  "environment": "production",
+  "title": "Database latency spike",
+  "description": "p95 query latency on billing-db exceeded 2s for five minutes.",
+  "metadata": { "region": "us-east-1" },
+  "telemetry": { "latency": 2400, "errorRate": 0.04, "cpu": 71 }
+}

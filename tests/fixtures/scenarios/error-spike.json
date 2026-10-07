@@ -1,0 +1,12 @@
+{
+  "name": "5xx error spike",
+  "incident": "error-spike.json",
+  "recordedDecision": {
+    "domain": "unknown",
+    "severity": 88,
+    "confidence": 0.92,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "human_review", "ruleId": "unknown-domain" }
+}

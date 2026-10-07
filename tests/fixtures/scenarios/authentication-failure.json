@@ -1,0 +1,12 @@
+{
+  "name": "authentication failure spike",
+  "incident": "authentication-failure.json",
+  "recordedDecision": {
+    "domain": "authentication",
+    "severity": 80,
+    "confidence": 0.8,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "notify", "ruleId": "notify" }
+}

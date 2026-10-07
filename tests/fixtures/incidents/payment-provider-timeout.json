@@ -1,0 +1,11 @@
+{
+  "id": "inc_payment_provider_timeout",
+  "timestamp": "2026-10-07T12:15:00.000Z",
+  "source": "gateway",
+  "service": "payments-api",
+  "environment": "production",
+  "title": "External payment provider timeout",
+  "description": "The card provider stopped answering within the client timeout.",
+  "metadata": { "provider": "card-gateway" },
+  "telemetry": { "latency": 10000, "errorRate": 0.62, "statusCode": 504, "exception": "timeout" }
+}

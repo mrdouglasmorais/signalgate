@@ -1,0 +1,12 @@
+{
+  "name": "CPU saturation",
+  "incident": "cpu-saturation.json",
+  "recordedDecision": {
+    "domain": "infrastructure",
+    "severity": 96,
+    "confidence": 0.97,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "page", "ruleId": "page" }
+}

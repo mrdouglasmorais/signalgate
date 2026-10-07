@@ -55,7 +55,21 @@ v0.1 is Incident → Jev → Decision → Policy → Response, stored in memory,
 
 ## Getting started
 
-The runtime is not scaffolded yet. When it is, the expected baseline is Node.js 22 or newer, pnpm, and a `TYPESAFE_API_KEY` only for live Jev calls. The test suite must pass without that key. See `.env.example`.
+Node.js 24 (see `.nvmrc`) and pnpm 10. Copy `.env.example` to `.env`. `TYPESAFE_API_KEY` is required only for a live Jev call. The test suite passes without it.
+
+```sh
+pnpm install
+pnpm test
+pnpm dev
+```
+
+The API listens on `127.0.0.1:3000` unless `HOST` and `PORT` say otherwise.
+
+```sh
+docker compose up --build
+```
+
+In Docker the process listens on `0.0.0.0:3000`. History is still in memory and disappears when the container stops.
 
 ## Further reading
 

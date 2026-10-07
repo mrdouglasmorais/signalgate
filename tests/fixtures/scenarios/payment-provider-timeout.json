@@ -1,0 +1,12 @@
+{
+  "name": "external payment provider timeout",
+  "incident": "payment-provider-timeout.json",
+  "recordedDecision": {
+    "domain": "external-provider",
+    "severity": 93,
+    "confidence": 0.55,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "human_review", "ruleId": "low-confidence" }
+}

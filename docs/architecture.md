@@ -19,12 +19,12 @@ flowchart TB
 
 ## Containers
 
-| Container | v0.1 | Later |
-| --- | --- | --- |
-| HTTP API | Fastify | same |
-| Decision provider | Jev via `@typesafe-ai/sdk` | rule engine, LLM |
-| Store | in-memory | PostgreSQL in v0.3 |
-| Telemetry | structured logs | OpenTelemetry in v0.4 |
+| Container         | v0.1                       | Later                 |
+| ----------------- | -------------------------- | --------------------- |
+| HTTP API          | Fastify                    | same                  |
+| Decision provider | Jev via `@typesafe-ai/sdk` | rule engine, LLM      |
+| Store             | in-memory                  | PostgreSQL in v0.3    |
+| Telemetry         | structured logs            | OpenTelemetry in v0.4 |
 
 Redis is optional and has no phase until a measured need exists.
 

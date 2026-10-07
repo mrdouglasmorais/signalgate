@@ -1,0 +1,11 @@
+{
+  "id": "inc_error_spike",
+  "timestamp": "2026-10-07T12:30:00.000Z",
+  "source": "access-log",
+  "service": "edge",
+  "environment": "production",
+  "title": "5xx error spike",
+  "description": "The edge started returning server errors without a clear owner.",
+  "metadata": { "pop": "gru" },
+  "telemetry": { "errorRate": 0.55, "statusCode": 500 }
+}

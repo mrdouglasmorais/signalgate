@@ -1,0 +1,11 @@
+{
+  "id": "inc_ambiguous_signal",
+  "timestamp": "2026-10-07T12:35:00.000Z",
+  "source": "pager",
+  "service": "unknown-service",
+  "environment": "staging",
+  "title": "Unclear alert",
+  "description": "A single probe failed once and recovered.",
+  "metadata": {},
+  "telemetry": { "latency": 50 }
+}

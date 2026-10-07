@@ -22,4 +22,4 @@ Implementation, strict types, passing tests, lint, and formatting. Update the RE
 
 ## Agent assistance
 
-Guidelines are split into `.cursor/skills/` (local workflow), `.cursor/rules/`, `.cursor/context/`, and `.cursor/harness/`. The harness holds the DDD, logging, and test-coverage standards.
+Local agent guidelines live in `.cursor/` (`skills`, `rules`, `context`, `harness`) and are not versioned. The harness holds the DDD, logging, and test-coverage standards.

@@ -2,14 +2,14 @@
 
 SignalGate grows in public slices. Each slice is small enough to explain, and each one leaves the repository in a state a reviewer can run.
 
-| Version | Theme | Outcome |
-| --- | --- | --- |
-| v0.1 | Decision path | Incident → Jev → Decision → Policy → Response, in memory, 6–10 scenarios |
-| v0.2 | Policy depth | Richer precedence, human-review reasons, branch coverage of the policy |
-| v0.3 | Audit trail | PostgreSQL history that can be replayed |
-| v0.4 | Observability | Traces and the evaluation metrics |
-| v0.5 | Benchmark | Rules vs Jev on a fixed incident set |
-| v0.6 | LLM comparison | A third engine, same policy, same fixtures |
+| Version | Theme          | Outcome                                                                  |
+| ------- | -------------- | ------------------------------------------------------------------------ |
+| v0.1    | Decision path  | Incident → Jev → Decision → Policy → Response, in memory, 6–10 scenarios |
+| v0.2    | Policy depth   | Richer precedence, human-review reasons, branch coverage of the policy   |
+| v0.3    | Audit trail    | PostgreSQL history that can be replayed                                  |
+| v0.4    | Observability  | Traces and the evaluation metrics                                        |
+| v0.5    | Benchmark      | Rules vs Jev on a fixed incident set                                     |
+| v0.6    | LLM comparison | A third engine, same policy, same fixtures                               |
 
 ## v0.1 acceptance
 

@@ -1,0 +1,12 @@
+{
+  "name": "Redis cache miss storm",
+  "incident": "cache-miss-storm.json",
+  "recordedDecision": {
+    "domain": "infrastructure",
+    "severity": 74,
+    "confidence": 0.88,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "notify", "ruleId": "notify" }
+}

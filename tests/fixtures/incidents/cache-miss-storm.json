@@ -1,0 +1,11 @@
+{
+  "id": "inc_cache_miss_storm",
+  "timestamp": "2026-10-07T12:05:00.000Z",
+  "source": "prometheus",
+  "service": "session-cache",
+  "environment": "production",
+  "title": "Redis cache miss storm",
+  "description": "Cache hit ratio fell below 20 percent and origin latency climbed.",
+  "metadata": { "cluster": "sessions" },
+  "telemetry": { "latency": 800, "errorRate": 0.12, "cpu": 64 }
+}

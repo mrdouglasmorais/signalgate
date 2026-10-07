@@ -8,12 +8,12 @@ Current work is **v0.1**, the in-memory path Incident → Jev → Decision → P
 
 Guidelines live in four folders:
 
-| Folder | Role |
-| --- | --- |
-| `.cursor/skills/` | Workflow for the agent. Local only, not versioned. |
-| `.cursor/rules/` | Short constraints the editor applies. |
-| `.cursor/context/` | Phase, domain, and Jev facts. |
-| `.cursor/harness/` | DDD, logging, tests, and the definition of done. |
+| Folder             | Role                                               |
+| ------------------ | -------------------------------------------------- |
+| `.cursor/skills/`  | Workflow for the agent. Local only, not versioned. |
+| `.cursor/rules/`   | Short constraints the editor applies.              |
+| `.cursor/context/` | Phase, domain, and Jev facts.                      |
+| `.cursor/harness/` | DDD, logging, tests, and the definition of done.   |
 
 Start with `.cursor/context/project.md` and `.cursor/harness/done.md`.
 

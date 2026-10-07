@@ -1,0 +1,11 @@
+{
+  "id": "inc_cpu_saturation",
+  "timestamp": "2026-10-07T12:25:00.000Z",
+  "source": "node-exporter",
+  "service": "checkout",
+  "environment": "production",
+  "title": "CPU saturation",
+  "description": "Checkout hosts stayed above 95 percent CPU.",
+  "metadata": { "cluster": "checkout" },
+  "telemetry": { "cpu": 99, "memory": 91 }
+}

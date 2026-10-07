@@ -1,0 +1,12 @@
+{
+  "name": "database latency spike",
+  "incident": "database-latency.json",
+  "recordedDecision": {
+    "domain": "database",
+    "severity": 92,
+    "confidence": 0.95,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "page", "ruleId": "page" }
+}

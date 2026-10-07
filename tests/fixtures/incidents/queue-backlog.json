@@ -1,0 +1,11 @@
+{
+  "id": "inc_queue_backlog",
+  "timestamp": "2026-10-07T12:10:00.000Z",
+  "source": "cloudwatch",
+  "service": "order-worker",
+  "environment": "production",
+  "title": "SQS queue backlog",
+  "description": "The order queue depth has climbed for twenty minutes.",
+  "metadata": { "queue": "orders" },
+  "telemetry": { "queueDepth": 15000, "latency": 1200 }
+}

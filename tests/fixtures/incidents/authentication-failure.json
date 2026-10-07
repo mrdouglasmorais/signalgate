@@ -1,0 +1,11 @@
+{
+  "id": "inc_authentication_failure",
+  "timestamp": "2026-10-07T12:20:00.000Z",
+  "source": "auth-logs",
+  "service": "login",
+  "environment": "production",
+  "title": "Authentication failure spike",
+  "description": "Failed logins jumped across the production login service.",
+  "metadata": { "region": "eu-west-1" },
+  "telemetry": { "errorRate": 0.4, "statusCode": 401 }
+}

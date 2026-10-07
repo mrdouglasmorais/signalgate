@@ -1,0 +1,12 @@
+{
+  "name": "ambiguous low-signal event",
+  "incident": "ambiguous-signal.json",
+  "recordedDecision": {
+    "domain": "unknown",
+    "severity": 20,
+    "confidence": 0.3,
+    "engine": "jev",
+    "model": "recorded-fixture"
+  },
+  "expected": { "action": "human_review", "ruleId": "low-confidence" }
+}
