@@ -54,7 +54,7 @@ Handlers validate and map HTTP. Use cases order the work. The context builder no
 2. The context builder selects the fields the questions need. It does not classify.
 3. `JevDecisionEngine` calls `systemOne` with a domain `choice` and a severity `score`.
 4. A pure mapper turns the score into a severity from 0 to 100 and aggregates confidence from fields the SDK actually returns.
-5. `PolicyEngine` applies the precedence in `.cursor/skills/signalgate/reference.md`.
+5. `PolicyEngine` applies the precedence in `.cursor/context/domain.md`.
 6. The use case stores a decision record: incident, decision, model id, policy id, action, timing, input hash.
 
 ```mermaid
@@ -82,6 +82,6 @@ The TypeSafe API key stays in the environment. Logs may carry `requestId`, `inci
 ## Trade-offs
 
 - In-memory history is lost on restart. That is accepted until the audit phase, so the first review of the repo is about the decision path.
-- A `DecisionEngine` interface exists before a second implementation, because the benchmark is a stated goal and the domain must not import Jev. No other port is created early.
+- `DecisionEngine` and `IncidentRepository` are ports so use cases do not import adapters. The layer rules are in `.cursor/harness/ddd.md`.
 - Policy is small and ordered, not a rules DSL. A DSL can wait until the precedence table no longer fits in one function.
 - Live model output is not the oracle in CI. Recorded answers keep the suite deterministic. Accuracy against labels is a benchmark concern, not a unit-test concern.

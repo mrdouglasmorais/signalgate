@@ -22,4 +22,4 @@ Implementation, strict types, passing tests, lint, and formatting. Update the RE
 
 ## Agent assistance
 
-Project rules live in `.cursor/rules/`. The implementation skill is `.cursor/skills/signalgate/SKILL.md`.
+Guidelines are split into `.cursor/skills/` (local workflow), `.cursor/rules/`, `.cursor/context/`, and `.cursor/harness/`. The harness holds the DDD, logging, and test-coverage standards.

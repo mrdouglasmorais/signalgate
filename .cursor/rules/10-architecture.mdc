@@ -22,4 +22,4 @@ The Policy Engine owns escalation: `none`, `notify`, `page`, or `human_review`. 
 
 Treat every external answer as possibly wrong. No model output may run shell, SQL, deploys, rollbacks, or configuration changes.
 
-Details: `.cursor/skills/signalgate/reference.md` and `jev.md`.
+Facts: `.cursor/context/domain.md` and `.cursor/context/jev.md`. Layer rules: `.cursor/harness/ddd.md`.

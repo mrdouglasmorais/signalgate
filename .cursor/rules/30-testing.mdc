@@ -13,6 +13,6 @@ Test behavior, not private methods. Arrange, act, assert. One purpose per test.
 - HTTP tests use Fastify `inject`.
 - CI asserts policy outcomes against recorded decision fixtures. A live Jev call is optional and must not be required for the suite to pass.
 - Reuse fixtures in `tests/fixtures/`. Do not paste large incident objects into tests.
-- Coverage targets are a floor for meaningful branches: 90% domain, 90% policy, 85% application. Do not add tests that only execute lines.
+- Coverage floors are enforced by the test command: 90% domain, 90% policy, 85% application. Do not add tests that only execute lines.
 
-A feature is unfinished while its tests fail.
+The full standard is `.cursor/harness/testing.md`. A feature is unfinished while its tests fail.

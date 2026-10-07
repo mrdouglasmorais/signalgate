@@ -2,11 +2,20 @@
 
 Do not optimize for code volume. Optimize for engineering quality and explainability.
 
-SignalGate is a showcase of incident classification: telemetry becomes context, a decision engine classifies it, and a deterministic policy chooses the action. Jev never executes an action.
+SignalGate classifies an incident, then a deterministic policy chooses the action. Jev never executes an action.
 
 Current work is **v0.1**, the in-memory path Incident → Jev → Decision → Policy → Response. Do not add PostgreSQL, Redis, OpenTelemetry, a benchmark runner, or an LLM engine in this phase.
 
-Before implementing, follow `.cursor/skills/signalgate/SKILL.md`.
+Guidelines live in four folders:
+
+| Folder | Role |
+| --- | --- |
+| `.cursor/skills/` | Workflow for the agent. Local only, not versioned. |
+| `.cursor/rules/` | Short constraints the editor applies. |
+| `.cursor/context/` | Phase, domain, and Jev facts. |
+| `.cursor/harness/` | DDD, logging, tests, and the definition of done. |
+
+Start with `.cursor/context/project.md` and `.cursor/harness/done.md`.
 
 Decisions already recorded:
 

@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Jev adapter
 
-Use `@typesafe-ai/sdk` as installed. Before calling it, read `node_modules/@typesafe-ai/sdk` types or https://docs.typesafe.ai.
+Use `@typesafe-ai/sdk` as installed. Before calling it, read `node_modules/@typesafe-ai/sdk` types or https://docs.typesafe.ai. The project notes are `.cursor/context/jev.md`. If a note and the installed types disagree, the types win and the note is corrected.
 
 Allowed questions are the SDK primitives: `choice`, `score`, and `noul`, sent through `TypeSafeClient.systemOne`. Do not add methods, fields, or response shapes the installed types do not declare.
 

@@ -21,6 +21,6 @@ Docker Compose arrives with the first infrastructure dependency that needs a con
 ## Consequences
 
 - The first review is about domain, policy, and tests.
-- A repository interface is postponed until PostgreSQL exists. The in-memory module is a concrete type.
+- The application owns a small `IncidentRepository` port so use cases do not import the store. v0.1 has one adapter, in memory. PostgreSQL in v0.3 is the second adapter.
 - v0.3 will be a visible migration, which is a better public story than a database that never had data.
 - Local demos cannot claim durability. That is an honest limit, not a hidden one.

@@ -17,7 +17,7 @@ SignalGate grows in public slices. Each slice is small enough to explain, and ea
 - Evaluation calls Jev only inside `JevDecisionEngine`.
 - Severity 0–100 is produced by a tested mapper.
 - The policy precedence is unit-tested, including confidence below 0.60 overriding a page.
-- Scenario fixtures cover the eight cases in the skill reference.
+- Scenario fixtures cover the eight cases in `.cursor/context/domain.md`.
 - The default test command does not need `TYPESAFE_API_KEY`.
 - README shows one real request and one real decision taken from the running slice.
 
@@ -25,4 +25,4 @@ SignalGate grows in public slices. Each slice is small enough to explain, and ea
 
 PostgreSQL, Redis, OpenTelemetry, dashboards, benchmark statistics, and any LLM client. Adding them during v0.1 is out of scope even if the dependency is easy to install.
 
-Phase boundaries for agents live in `.cursor/skills/signalgate/phases.md`.
+Phase boundaries for agents live in `.cursor/context/phases.md`.
